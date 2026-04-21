@@ -11,6 +11,13 @@ Route::get('/detail', function () {
     return view('landing.pages.detail');
 });
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', function () {
+        return view('admin.master');
+    })->name('index');
+});
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

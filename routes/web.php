@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Zone;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('landing.pages.index');
+    $zones = Zone::all();
+    return view('landing.pages.index', compact('zones'));
 });
 
 Route::get('/detail', function () {
@@ -13,9 +15,11 @@ Route::get('/detail', function () {
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', function () {
-        return view('admin.master');
+        return view('admin.pages.index');
     })->name('index');
+    Route::resource('zones', \App\Http\Controllers\ZoneController::class);
 });
+
 
 
 Route::get('/dashboard', function () {
@@ -29,4 +33,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

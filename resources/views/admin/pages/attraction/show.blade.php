@@ -7,19 +7,19 @@
         <div class="col-lg-12 col-md-12 col-12">
             <div class="border-bottom pb-4 mb-4 d-md-flex align-items-center justify-content-between">
                 <div class="mb-3 mb-md-0">
-                    <h1 class="mb-1 h2 fw-bold text-dark">Zone Details</h1>
+                    <h1 class="mb-1 h2 fw-bold text-dark">Attraction Details</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.zones.index') }}">Zones</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.attraction.index') }}">Attraction</a></li>
                             <li class="breadcrumb-item active" aria-current="page">View Details</li>
                         </ol>
                     </nav>
                 </div>
                 <div>
-                    <a href="{{ route('admin.zones.edit', $zone) }}" class="btn btn-warning text-white shadow-sm">
-                        <i class="fas fa-edit me-1"></i> Edit Zone
+                    <a href="{{ route('admin.attraction.edit', $attraction) }}" class="btn btn-warning text-white shadow-sm">
+                        <i class="fas fa-edit me-1"></i> Edit Attraction
                     </a>
-                    <a href="{{ route('admin.zones.index') }}" class="btn btn-outline-secondary ms-2 shadow-sm">
+                    <a href="{{ route('admin.attraction.index') }}" class="btn btn-outline-secondary ms-2 shadow-sm">
                         <i class="fas fa-arrow-left me-1"></i> Back to List
                     </a>
                 </div>
@@ -32,14 +32,14 @@
             <div class="card shadow-sm mb-4 border-0">
                 <div class="card-body p-5">
                     <div class="mb-5">
-                        <label class="text-uppercase small fw-bold text-muted d-block mb-2">Zone Name</label>
-                        <h2 class="fw-bold text-dark mb-0">{{ $zone->name }}</h2>
+                        <label class="text-uppercase small fw-bold text-muted d-block mb-2">Attraction Name</label>
+                        <h2 class="fw-bold text-dark mb-0">{{ $attraction->name }}</h2>
                     </div>
 
                     <div class="mb-5">
                         <label class="text-uppercase small fw-bold text-muted d-block mb-2">Description</label>
                         <p class="fs-4 text-dark lh-base">
-                            {{ $zone->description ?? 'No description provided for this zone.' }}
+                            {{ $attraction->description ?? 'No description provided for this attraction.' }}
                         </p>
                     </div>
 
@@ -47,12 +47,12 @@
                         <div class="col-md-6 mb-4 mb-md-0">
                             <label class="text-uppercase small fw-bold text-muted d-block mb-2">Price Rating</label>
                             <div class="d-inline-block px-3 py-1 rounded bg-light-success text-success border border-success fw-bold">
-                                {{ $zone->price_range ?? '-' }}
+                                {{ $attraction->price_range ?? '-' }}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <label class="text-uppercase small fw-bold text-muted d-block mb-2">Data Created At</label>
-                            <p class="text-dark fw-medium">{{ $zone->created_at->format('d F Y, H:i') }}</p>
+                            <p class="text-dark fw-medium">{{ $attraction->created_at->format('d F Y, H:i') }}</p>
                         </div>
                     </div>
                 </div>
@@ -62,12 +62,12 @@
         <div class="col-xl-4 col-lg-5 col-md-12 col-12">
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-white border-bottom-0 py-3 text-center">
-                    <h4 class="mb-0 fw-bold">Zone Preview</h4>
+                    <h4 class="mb-0 fw-bold">Attraction Preview</h4>
                 </div>
                 <div class="card-body text-center">
-                    @if($zone->image)
-                        <img src="{{ asset('storage/' . $zone->image) }}" 
-                             alt="{{ $zone->name }}" 
+                    @if($attraction->image)
+                        <img src="{{ asset('storage/' . $attraction->image) }}" 
+                             alt="{{ $attraction->name }}" 
                              class="img-fluid rounded-3 shadow-sm"
                              style="max-height: 350px; width: 100%; object-fit: cover;">
                     @else
@@ -80,7 +80,7 @@
             </div>
 
            
-                    <form action="{{ route('admin.zones.destroy', $zone) }}" method="POST" class="d-grid">
+                    <form action="{{ route('admin.attraction.destroy', $attraction) }}" method="POST" class="d-grid">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm" 

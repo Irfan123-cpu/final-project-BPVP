@@ -14,17 +14,19 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
 
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('attraction_id')->constrained()->onDelete('cascade');
-            $table->text('description');
-            $table->integer('rating');
+            $table->morphs('reviewable');    
+            $table->integer('rating')->unsigned();
+            $table->string('name');
+            $table->text('comment');
+            $table->boolean('is_published')->default(false);
             $table->timestamps();
         });
     }
 
   
-    public function down(): void
+  public function down(): void
     {
+     
         Schema::dropIfExists('reviews');
     }
 };

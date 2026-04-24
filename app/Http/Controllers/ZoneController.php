@@ -66,7 +66,7 @@ class ZoneController extends Controller
 
 
         if ($request->hasFile('image')) {
-            // hapus lama
+           
             if ($zone->image) {
                 Storage::disk('public')->delete($zone->image);
             }
@@ -93,5 +93,10 @@ class ZoneController extends Controller
 
         return redirect()->route('admin.zones.index')
             ->with('success', 'Zone deleted successfully.');
+    }
+
+    public function showZones(Zone $zone)
+    {
+         return view('landing.pages.detail-zone', compact('zone'));
     }
 }

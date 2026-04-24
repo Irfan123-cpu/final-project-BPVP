@@ -16,14 +16,14 @@ class AttractionController extends Controller
     }
 
     public function create()
-    {   
+    {
         $zones = Zone::all();
         return view('admin.pages.attraction.create', compact('zones'));
     }
 
     public function store(Request $request)
     {
-  
+
         $validated = $request->validate([
             'name' => 'required',
             'zone_id' => 'required',
@@ -32,30 +32,30 @@ class AttractionController extends Controller
             'image' => 'nullable|image|max:2048|mimes:jpg,jpeg,png',
         ]);
 
-  
+
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('attraction', 'public');
         }
 
-       
+
         Attraction::create($validated);
 
-      
+
         return redirect()->route('admin.attraction.index')
             ->with('success', 'attraction created successfully.');
     }
 
     public function show($id)
     {
-        $attraction = Attraction::findOrFail($id);
+        $attraction = Attraction::with('reviews')->findOrFail($id);
         return view('admin.pages.attraction.show', compact('attraction'));
     }
 
-   public function edit($id)
-    {   
+    public function edit($id)
+    {
         $zones = Zone::all();
         $attraction = Attraction::findOrFail($id);
-        return view('admin.pages.attraction.edit', compact('attraction', 'zones' ));
+        return view('admin.pages.attraction.edit', compact('attraction', 'zones'));
     }
 
 
@@ -64,15 +64,15 @@ class AttractionController extends Controller
         $attraction = Attraction::findOrFail($id);
 
         $validated = $request->validate([
+            'name' => 'required',
             'zone_id' => 'required',
             'description' => 'required',
             'price_range' => 'required',
             'image' => 'nullable|image|max:2048|mimes:jpg,jpeg,png',
         ]);
 
-
         if ($request->hasFile('image')) {
-           
+
             if ($attraction->image) {
                 Storage::disk('public')->delete($attraction->image);
             }
@@ -90,7 +90,7 @@ class AttractionController extends Controller
     {
         $attraction = Attraction::findOrFail($id);
 
-    
+
         if ($attraction->image) {
             Storage::disk('public')->delete($attraction->image);
         }
@@ -99,5 +99,10 @@ class AttractionController extends Controller
 
         return redirect()->route('admin.attraction.index')
             ->with('success', 'attraction deleted successfully.');
+    }
+
+    public function showAttractions(Attraction $attraction)
+    {
+         return view('landing.pages.detail-attraction', compact('attraction'));
     }
 }
